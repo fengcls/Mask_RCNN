@@ -15,7 +15,7 @@ import math
 import datetime
 import itertools
 import json
-import re
+import regex
 import logging
 from collections import OrderedDict
 import numpy as np
@@ -2092,7 +2092,7 @@ class MaskRCNN():
             if not layer.weights:
                 continue
             # Is it trainable?
-            trainable = bool(re.fullmatch(layer_regex, layer.name))
+            trainable = bool(regex.fullmatch(layer_regex, layer.name))
             # Update layer. If layer is a container, update inner layer.
             if layer.__class__.__name__ == 'TimeDistributed':
                 layer.layer.trainable = trainable
@@ -2121,7 +2121,7 @@ class MaskRCNN():
             # A sample model path might look like:
             # /path/to/logs/coco20171029T2315/mask_rcnn_coco_0001.h5
             regex = r".*/\w+(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})/mask\_rcnn\_\w+(\d{4})\.h5"
-            m = re.match(regex, model_path)
+            m = regex.match(regex, model_path)
             if m:
                 now = datetime.datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)),
                                         int(m.group(4)), int(m.group(5)))
@@ -2369,15 +2369,14 @@ class MaskRCNN():
         # Convert name to a regex and allow matching a number prefix
         # because Keras adds them automatically
         if isinstance(name, str):
-            name = re.compile(name.replace("/", r"(\_\d+)*/"))
+            name = regex.compile(name.replace("/", r"(\_\d+)*/"))
 
         parents = tensor.op.inputs
         for p in parents:
-            print p.name,name
+            # print p.name,name
             if p in checked:
                 continue
-                ########################### notice!
-            if bool(re.match(name, p.name)):
+            if bool(regex.fullmatch(name, p.name)):
                 return p
             checked.append(p)
             a = self.ancestor(p, name, checked)
