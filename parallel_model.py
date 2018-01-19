@@ -18,6 +18,8 @@ import keras.backend as K
 import keras.layers as KL
 import keras.models as KM
 
+from __future__ import division
+
 
 class ParallelModel(KM.Model):
     """Subclasses the standard Keras Model and adds multi-GPU support.

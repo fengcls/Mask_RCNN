@@ -10,6 +10,7 @@ Written by Waleed Abdulla
 import math
 import numpy as np
 
+from __future__ import division
 
 # Base Configuration Class
 # Don't use this class directly. Instead, sub-class it and override

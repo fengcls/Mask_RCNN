@@ -13,6 +13,7 @@ import math
 import random
 import numpy as np
 import cv2
+from __future__ import division
 
 from config import Config
 import utils

@@ -17,6 +17,7 @@ import matplotlib.patches as patches
 import matplotlib.lines as lines
 from matplotlib.patches import Polygon
 import IPython.display
+from __future__ import division
 
 import utils
 

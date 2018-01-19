@@ -1,0 +1,8 @@
+1. interger division:
+from __future__ import division
+float(3)/2 or 3/2.0 instead of 3/2
+
+2. round(2.5)
+In Python 3, decimals are rounded to the nearest even number
+
+3. re.fullmatch

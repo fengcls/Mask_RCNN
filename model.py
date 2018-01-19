@@ -28,6 +28,8 @@ import keras.initializers as KI
 import keras.engine as KE
 import keras.models as KM
 
+from __future__ import division
+
 import utils
 
 # Requires TensorFlow 1.3+ and Keras 2.0.8+.
