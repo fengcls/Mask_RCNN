@@ -2359,6 +2359,7 @@ class MaskRCNN():
         checked: For internal use. A list of tensors that were already
                  searched to avoid loops in traversing the graph.
         """
+        
         checked = checked if checked is not None else []
         # Put a limit on how deep we go to avoid very long loops
         if len(checked) > 500:
@@ -2370,9 +2371,11 @@ class MaskRCNN():
 
         parents = tensor.op.inputs
         for p in parents:
+            print p.name,name
             if p in checked:
                 continue
-            if bool(re.fullmatch(name, p.name)):
+                ########################### notice!
+            if bool(re.match(name, p.name)):
                 return p
             checked.append(p)
             a = self.ancestor(p, name, checked)

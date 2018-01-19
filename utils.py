@@ -16,7 +16,8 @@ import tensorflow as tf
 import scipy.misc
 import skimage.color
 import skimage.io
-import urllib.request
+# from urllib.request import urlopen
+from urllib import urlopen
 import shutil
 
 # URL from which to download the latest COCO trained weights
@@ -389,16 +390,16 @@ def resize_image(image, min_dim=None, max_dim=None, padding=False):
     # Scale?
     if min_dim:
         # Scale up but not down
-        scale = max(1, min_dim / min(h, w))
+        scale = max(1, min_dim / float(min(h, w)))
     # Does it exceed max dim?
     if max_dim:
         image_max = max(h, w)
         if round(image_max * scale) > max_dim:
-            scale = max_dim / image_max
+            scale = max_dim / float(image_max)
     # Resize image and mask
     if scale != 1:
         image = scipy.misc.imresize(
-            image, (round(h * scale), round(w * scale)))
+            image, (int(round(h * scale)), int(round(w * scale))))
     # Need padding?
     if padding:
         # Get new height and width
@@ -610,10 +611,10 @@ def compute_ap(gt_boxes, gt_class_ids,
                 gt_match[j] = 1
                 pred_match[i] = 1
                 break
-
+    print(pred_match)
     # Compute precision and recall at each prediction box step
-    precisions = np.cumsum(pred_match) / (np.arange(len(pred_match)) + 1)
-    recalls = np.cumsum(pred_match).astype(np.float32) / len(gt_match)
+    precisions = np.cumsum(pred_match) / (np.arange(len(pred_match)) + 1.)
+    recalls = np.cumsum(pred_match).astype(np.float32) / float(len(gt_match))
 
     # Pad with start and end values to simplify the math
     precisions = np.concatenate([[0], precisions, [0]])
@@ -647,7 +648,7 @@ def compute_recall(pred_boxes, gt_boxes, iou):
     positive_ids = np.where(iou_max >= iou)[0]
     matched_gt_boxes = iou_argmax[positive_ids]
 
-    recall = len(set(matched_gt_boxes)) / gt_boxes.shape[0]
+    recall = len(set(matched_gt_boxes)) / float(gt_boxes.shape[0])
     return recall, positive_ids
 
 
@@ -702,7 +703,10 @@ def download_trained_weights(coco_model_path, verbose=1):
     """
     if verbose > 0:
         print("Downloading pretrained model to " + coco_model_path + " ...")
-    with urllib.request.urlopen(COCO_MODEL_URL) as resp, open(coco_model_path, 'wb') as out:
-        shutil.copyfileobj(resp, out)
+        print(COCO_MODEL_URL)
+        
+    resp = urlopen(COCO_MODEL_URL)
+    out = open(coco_model_path,'wb')
+    shutil.copyfileobj(resp, out)
     if verbose > 0:
         print("... done downloading pretrained model!")
