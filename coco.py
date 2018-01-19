@@ -26,11 +26,11 @@ Usage: import the module (see Jupyter notebooks for examples), or run from
     # Run COCO evaluatoin on the last model you trained
     python3 coco.py evaluate --dataset=/path/to/coco/ --model=last
 """
+from __future__ import division
 
 import os
 import time
 import numpy as np
-from __future__ import division
 
 # Download and install the Python COCO tools from https://github.com/waleedka/coco
 # That's a fork from the original https://github.com/pdollar/coco with a bug

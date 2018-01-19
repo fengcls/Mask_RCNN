@@ -12,13 +12,12 @@ https://medium.com/@kuza55/transparent-multi-gpu-training-on-tensorflow-with-ker
 https://github.com/avolkov1/keras_experiments/blob/master/keras_exp/multigpu/
 https://github.com/fchollet/keras/blob/master/keras/utils/training_utils.py
 """
+from __future__ import division
 
 import tensorflow as tf
 import keras.backend as K
 import keras.layers as KL
 import keras.models as KM
-
-from __future__ import division
 
 
 class ParallelModel(KM.Model):

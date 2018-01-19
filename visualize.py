@@ -6,6 +6,7 @@ Copyright (c) 2017 Matterport, Inc.
 Licensed under the MIT License (see LICENSE for details)
 Written by Waleed Abdulla
 """
+from __future__ import division
 
 import random
 import itertools
@@ -17,7 +18,6 @@ import matplotlib.patches as patches
 import matplotlib.lines as lines
 from matplotlib.patches import Polygon
 import IPython.display
-from __future__ import division
 
 import utils
 
